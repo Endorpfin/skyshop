@@ -78,7 +78,7 @@ public class StorageService {
         return result;
     }
 
-    // Новый метод: получить продукт по id
+    // Новый метод:  получить продукт по id
     public Optional<Product> getProductById(UUID id) {
         return Optional.ofNullable(products.get(id));
     }
