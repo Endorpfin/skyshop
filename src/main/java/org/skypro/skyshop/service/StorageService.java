@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -70,11 +71,15 @@ public class StorageService {
         return articles.values();
     }
 
-    // Новый метод: все объекты, по которым можно искать
     public Collection<Searchable> getAllSearchable() {
         Collection<Searchable> result = new ArrayList<>();
         result.addAll(products.values());
         result.addAll(articles.values());
         return result;
+    }
+
+    // Новый метод:  получить продукт по id
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(products.get(id));
     }
 }
