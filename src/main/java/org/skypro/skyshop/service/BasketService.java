@@ -1,5 +1,6 @@
 package org.skypro.skyshop.service;
 
+import org.skypro.skyshop.exception.NoSuchProductException;
 import org.skypro.skyshop.model.basket.BasketItem;
 import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.basket.UserBasket;
@@ -23,9 +24,9 @@ public class BasketService {
     // Добавление товара в корзину
     public void addProduct(UUID id) {
         Product product = storageService.getProductById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Продукт с таким id не найден: " + id));
+                .orElseThrow(() -> new NoSuchProductException("Продукт с таким id не найден: " + id));
         // Если продукт существует, просто добавляем его id в корзину
-        productBasket.addProduct(id);
+        productBasket.addProduct(product.getId());
     }
 
     // Получение корзины пользователя
@@ -37,7 +38,7 @@ public class BasketService {
                     UUID id = entry.getKey();
                     int quantity = entry.getValue();
                     Product product = storageService.getProductById(id)
-                            .orElseThrow(() -> new IllegalArgumentException("Продукт с таким id не найден: " + id));
+                            .orElseThrow(() -> new NoSuchProductException("Продукт с таким id не найден: " + id));
                     return new BasketItem(product, quantity);
                 })
                 .toList();
